@@ -1,51 +1,41 @@
+import { useNavigate } from "react-router-dom";
 import React from 'react';
 import { Calendar, MapPin, Heart } from 'lucide-react';
 
 const ProductCard = ({ concert }) => {
   if (!concert) return null; // ⛑️ PENGAMAN
 
+  useEffect(() => {
+    const data = localStorage.getItem("selectedConcert");
+    if (data) {
+      setConcert(JSON.parse(data));
+    }
+  }, []);
+
+ if (!concert) {
+    return <p className="p-6">Tidak ada tiket dipilih</p>;
+  }
+
   return (
-    <div className="bg-white rounded-2xl shadow w-[260px] overflow-hidden">
-      {/* Header */}
-      <div className="bg-gradient-to-br from-blue-900 to-slate-800 h-36 flex items-center justify-center relative">
-        <span className="text-5xl text-white">🎵</span>
+    <div className="p-6 max-w-md mx-auto bg-white rounded-xl shadow">
+      <h2 className="text-xl font-bold mb-4">Checkout Tiket</h2>
 
-        {concert.tag && (
-          <span
-            className={`absolute top-3 left-3 ${concert.tagColor} text-white text-xs px-3 py-1 rounded-full`}
-          >
-            {concert.tag}
-          </span>
-        )}
+      <p className="font-semibold">{concert.title}</p>
+      <p>{concert.date}</p>
+      <p>{concert.venue}</p>
 
-        <Heart className="absolute top-3 right-3 text-white" />
-      </div>
+      <p className="font-bold text-lg mt-4">
+        Rp {concert.price.toLocaleString("id-ID")}
+      </p>
 
-      {/* Body */}
-      <div className="p-4">
-        <h3 className="font-bold mb-2">{concert.title}</h3>
-
-        <div className="text-sm text-gray-600 space-y-1 mb-3">
-          <div className="flex items-center gap-2">
-            <Calendar size={14} /> {concert.date}
-          </div>
-          <div className="flex items-center gap-2">
-            <MapPin size={14} /> {concert.venue}
-          </div>
-        </div>
-
-        <div className="flex justify-between items-center">
-          <span className="font-bold text-blue-900">
-            Rp {concert.price.toLocaleString('id-ID')}
-          </span>
-
-          <button className="bg-blue-900 text-white px-4 py-2 rounded-lg text-sm">
-            Beli
-          </button>
-        </div>
-      </div>
+      <button
+        className="mt-6 w-full bg-green-600 text-white py-3 rounded-lg font-bold"
+        onClick={() => alert("Pembayaran berhasil 🎉")}
+      >
+        Bayar Sekarang
+      </button>
     </div>
   );
 };
 
-export default ProductCard;
+export default Checkout;
