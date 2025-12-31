@@ -1,20 +1,48 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import Logo from "../assets/Logo.png";
 import { Search, Bell, User, MapPin } from "lucide-react";
 import BannerCarousel from "../components/public/BannerCarousel";
 import ProductCarousel from "../components/public/ProductCarousel";
 
-const Home = () => {
+const Home = ({ navigateTo }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCity, setSelectedCity] = useState("Jakarta");
-  const cities = ["Jakarta", "Bandung", "Bali", "Surabaya", "Yogyakarta"];
+  const [concerts, setConcerts] = useState([]);
+
+  const cities = [
+    "semua",
+    "Jakarta",
+    "Bandung",
+    "Surabaya",
+    "Bali",
+    "Yogyakarta",
+  ];
+  useEffect(() => {
+    fetch("https://694e8adab5bc648a93c0aad8.mockapi.io/api/v1/concerts")
+      .then((res) => res.json())
+      .then((data) => setConcerts(data));
+  }, []);
+
+  const filteredConcerts = concerts.filter((concert) => {
+    if (!concert) return false;
+
+    const matchCity = selectedCity === "semua" || concert.city === selectedCity;
+
+    const matchSearch = 
+    concert.artist?.toLowerCase()
+      .includes(searchQuery.toLowerCase());
+
+    return matchCity && matchSearch;
+  });
+  const handleBuy = (concert) => {
+    navigateTo("checkout", concert);
+  };
 
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* ================= HEADER ================= */}
       <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white">
         <div className="max-w-7xl mx-auto px-6 py-5">
-
           {/* NAVBAR */}
           <div className="flex items-center">
             {/* LOGO */}
@@ -28,9 +56,7 @@ const Home = () => {
               </div>
               <div>
                 <h1 className="text-2xl font-bold">E-tix</h1>
-                <p className="text-sm text-blue-200">
-                  Your Concert Journey
-                </p>
+                <p className="text-sm text-blue-200">Your Concert Journey</p>
               </div>
             </div>
 
@@ -87,13 +113,13 @@ const Home = () => {
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
         <BannerCarousel />
-        <ProductCarousel />
+        <ProductCarousel concerts={filteredConcerts}
+         onBuy={handleBuy} />
       </div>
     </div>
   );
