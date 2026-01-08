@@ -1,126 +1,54 @@
-import React, { useEffect } from "react";
+import { Bell, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import Logo from "../../assets/Logo.png";
 
-const SimpleSplashScreen = ({ onComplete }) => {
-  useEffect(() => {
-    // Auto redirect after 2.5 seconds
-    const timer = setTimeout(() => {
-      if (onComplete) {
-        onComplete();
-      }
-    }, 2500);
-
-    return () => clearTimeout(timer);
-  }, [onComplete]);
+export default function Navbar() {
+  const navigate = useNavigate();
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100vh",
-        background: "linear-gradient(180deg, #2b7db5 0%, #1a5580 100%)",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        fontFamily: "Arial, sans-serif"
-      }}
-    >
-      {/* Logo E-TIX */}
-      <div style={{ textAlign: "center", animation: "fadeIn 0.8s ease-out" }}>
-        <h1
-          style={{
-            fontSize: "140px",
-            fontWeight: "900",
-            margin: 0,
-            letterSpacing: "10px",
-            color: "white",
-            fontFamily: "'Arial Black', sans-serif",
-            textShadow: "0 4px 20px rgba(0,0,0,0.2)"
-          }}
-        >
-          E-TI
-          <span style={{ color: "#ff9e3d" }}>X</span>
-        </h1>
+    <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white">
+      <div className="max-w-7xl mx-auto px-6 py-5">
+        <div className="flex items-center">
+          
+    
+          <div className="flex items-center gap-3">
+            <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-blue-400 bg-white">
+              <img
+                src={Logo}
+                alt="E-tix Logo"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <div>
+              <h1 className="text-2xl font-bold">E-tix</h1>
+              <p className="text-sm text-blue-200">
+                Your Concert Journey
+              </p>
+            </div>
+
+          
+            <button
+              onClick={() => navigate("/admin")}
+              className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-md ml-4 transition"
+            >
+              Admin
+            </button>
+          </div>
+
+          
+          <div className="flex items-center gap-4 ml-auto">
+            <div className="relative">
+              <Bell className="w-6 h-6 cursor-pointer hover:text-blue-200 transition" />
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                6
+              </span>
+            </div>
+            <User className="w-6 h-6 cursor-pointer hover:text-blue-200 transition" />
+          </div>
+
+        </div>
       </div>
-
-      {/* CSS Animation */}
-      <style>{`
-        @keyframes fadeIn {
-          0% {
-            opacity: 0;
-            transform: scale(0.95);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-      `}</style>
     </div>
   );
-};
-
-// Demo Component
-const SplashDemo = () => {
-  const [showSplash, setShowSplash] = React.useState(true);
-
-  if (showSplash) {
-    return <SimpleSplashScreen onComplete={() => setShowSplash(false)} />;
-  }
-
-  // After splash
-  return (
-    <div
-      style={{
-        minHeight: "100vh",
-        background: "linear-gradient(180deg, #2b7db5 0%, #1a5580 100%)",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        fontFamily: "Arial, sans-serif",
-        color: "white",
-        padding: "40px",
-        textAlign: "center"
-      }}
-    >
-      <div style={{ fontSize: "80px", marginBottom: "20px" }}>✅</div>
-      <h1 style={{ fontSize: "42px", margin: "0 0 15px 0" }}>
-        Splash Selesai!
-      </h1>
-      <p style={{ fontSize: "16px", color: "rgba(255,255,255,0.8)", marginBottom: "30px" }}>
-        Ini halaman setelah splash screen
-      </p>
-      
-      <button
-        onClick={() => setShowSplash(true)}
-        style={{
-          padding: "14px 35px",
-          backgroundColor: "#ff9e3d",
-          border: "none",
-          borderRadius: "10px",
-          color: "white",
-          fontSize: "15px",
-          fontWeight: "bold",
-          cursor: "pointer",
-          boxShadow: "0 4px 15px rgba(255, 158, 61, 0.3)",
-          transition: "all 0.3s"
-        }}
-        onMouseOver={(e) => {
-          e.target.style.backgroundColor = "#f59231";
-          e.target.style.transform = "translateY(-2px)";
-        }}
-        onMouseOut={(e) => {
-          e.target.style.backgroundColor = "#ff9e3d";
-          e.target.style.transform = "translateY(0)";
-        }}
-      >
-        🔄 Lihat Splash Lagi
-      </button>
-    </div>
-  );
-};
-
-export default SplashDemo;
+}
