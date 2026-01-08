@@ -5,7 +5,7 @@ import DataTable from "../components/admin/DataTable";
 
 const API_URL = "https://694e8adab5bc648a93c0aad8.mockapi.io/api/v1/concerts";
 
-// STAT CARD
+
 const StatsCard = ({ icon, title, value, color }) => (
   <div className="bg-white rounded-xl p-6 shadow hover:-translate-y-1 transition flex items-center gap-5">
     <div
@@ -29,9 +29,7 @@ export default function AdminDashboard ({navigateTo}) {
     navigateTo("home");
   };
 
-  // =====================
-  // FETCH DATA
-  // =====================
+  
   const fetchConcerts = async () => {
     const res = await fetch(API_URL);
     const data = await res.json();
@@ -42,9 +40,7 @@ export default function AdminDashboard ({navigateTo}) {
     fetchConcerts();
   }, []);
 
-  // =====================
-  // CREATE / UPDATE
-  // =====================
+  
   const handleSubmit = async (formData) => {
     if (editData) {
       await fetch(`${API_URL}/${editData.id}`, {
@@ -65,18 +61,14 @@ export default function AdminDashboard ({navigateTo}) {
     fetchConcerts();
   };
 
-  // =====================
-  // DELETE
-  // =====================
+  
   const handleDelete = async (id) => {
     if (!confirm("Yakin hapus event ini?")) return;
     await fetch(`${API_URL}/${id}`, { method: "DELETE" });
     fetchConcerts();
   };
 
-  // =====================
-  // STATS
-  // =====================
+ 
   const totalRevenue = concerts.reduce(
     (sum, c) => sum + Number(c.harga || 0),
     0

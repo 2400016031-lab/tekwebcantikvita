@@ -5,7 +5,7 @@ const AdminHeader = ({ onLogout }) => {
   return (
     <header className="bg-gradient-to-r from-blue-900 to-blue-500 px-10 py-5 text-white shadow-md">
       <div className="flex items-center justify-between">
-        {/* LEFT */}
+        
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 bg-white text-blue-700 rounded-full flex items-center justify-center text-2xl">
             🎫
@@ -18,7 +18,7 @@ const AdminHeader = ({ onLogout }) => {
           </div>
         </div>
 
-        {/* RIGHT */}
+       
         <Button
           variant="destructive"
           onClick={onLogout}

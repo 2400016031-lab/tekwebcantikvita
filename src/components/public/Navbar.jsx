@@ -1,15 +1,16 @@
-import React from "react";
 import { Bell, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/Logo.png";
 
-export default function Navbar({ navigateTo }) {
+export default function Navbar() {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-gradient-to-r from-blue-900 to-blue-800 text-white">
       <div className="max-w-7xl mx-auto px-6 py-5">
-        {/* NAVBAR */}
         <div className="flex items-center">
           
-          {/* LOGO + TITLE */}
+    
           <div className="flex items-center gap-3">
             <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-blue-400 bg-white">
               <img
@@ -26,15 +27,16 @@ export default function Navbar({ navigateTo }) {
               </p>
             </div>
 
+          
             <button
-              onClick={() => navigateTo("admin")}
-              className="px-4 py-2 bg-slate-800 text-white rounded-md ml-4"
+              onClick={() => navigate("/admin")}
+              className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-md ml-4 transition"
             >
               Admin
             </button>
           </div>
 
-          {/* ICONS */}
+          
           <div className="flex items-center gap-4 ml-auto">
             <div className="relative">
               <Bell className="w-6 h-6 cursor-pointer hover:text-blue-200 transition" />
