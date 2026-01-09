@@ -5,7 +5,6 @@ import DataTable from "../components/admin/DataTable";
 
 const API_URL = "https://694e8adab5bc648a93c0aad8.mockapi.io/api/v1/concerts";
 
-
 const StatsCard = ({ icon, title, value, color }) => (
   <div className="bg-white rounded-xl p-6 shadow hover:-translate-y-1 transition flex items-center gap-5">
     <div
@@ -20,16 +19,15 @@ const StatsCard = ({ icon, title, value, color }) => (
   </div>
 );
 
-export default function AdminDashboard ({navigateTo}) {
+export default function AdminDashboard({ navigateTo }) {
   const [concerts, setConcerts] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [editData, setEditData] = useState(null);
 
   const handleLogout = () => {
-    navigateTo("home");
+    window.location.href = "/";
   };
 
-  
   const fetchConcerts = async () => {
     const res = await fetch(API_URL);
     const data = await res.json();
@@ -40,7 +38,6 @@ export default function AdminDashboard ({navigateTo}) {
     fetchConcerts();
   }, []);
 
-  
   const handleSubmit = async (formData) => {
     if (editData) {
       await fetch(`${API_URL}/${editData.id}`, {
@@ -61,14 +58,12 @@ export default function AdminDashboard ({navigateTo}) {
     fetchConcerts();
   };
 
-  
   const handleDelete = async (id) => {
     if (!confirm("Yakin hapus event ini?")) return;
     await fetch(`${API_URL}/${id}`, { method: "DELETE" });
     fetchConcerts();
   };
 
- 
   const totalRevenue = concerts.reduce(
     (sum, c) => sum + Number(c.harga || 0),
     0
@@ -76,34 +71,16 @@ export default function AdminDashboard ({navigateTo}) {
 
   return (
     <div className="min-h-screen bg-slate-100">
-      <AdminHeader onLogout={handleLogout}/>
+      <AdminHeader onLogout={handleLogout} />
 
       <div className="p-10 space-y-10">
         {/* STATS */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
           <StatsCard
             icon="📅"
             title="Total Event"
             value={concerts.length}
             color="bg-blue-500 text-white"
-          />
-          <StatsCard
-            icon="💰"
-            title="Total Pendapatan"
-            value={`Rp ${(totalRevenue / 1_000_000).toFixed(1)}M`}
-            color="bg-emerald-500 text-white"
-          />
-          <StatsCard
-            icon="📊"
-            title="Tiket Terjual"
-            value="—"
-            color="bg-yellow-500 text-white"
-          />
-          <StatsCard
-            icon="📍"
-            title="Lokasi Aktif"
-            value="—"
-            color="bg-purple-500 text-white"
           />
         </div>
 
@@ -140,7 +117,7 @@ export default function AdminDashboard ({navigateTo}) {
             setEditData(null);
           }}
         />
-        )}
+      )}
     </div>
   );
 }
