@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Search, MapPin } from "lucide-react";
 import BannerCarousel from "../components/public/BannerCarousel";
 import ProductCarousel from "../components/public/ProductCarousel";
 
-const Home = ({ navigateTo }) => {
+const Home = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCity, setSelectedCity] = useState("Jakarta");
   const [concerts, setConcerts] = useState([]);
@@ -34,8 +36,8 @@ const Home = ({ navigateTo }) => {
     return matchCity && matchSearch;
   });
   const handleBuy = (concert) => {
-    navigateTo("checkout", concert);
-  };
+  navigate(`/checkout/${concert.id}`);
+};
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -88,7 +90,7 @@ const Home = ({ navigateTo }) => {
       {/* CONTENT */}
       <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
         <BannerCarousel />
-        <ProductCarousel concerts={filteredConcerts} onBuy={handleBuy} />
+        <ProductCarousel concerts={filteredConcerts} onBuy={handleBuy} onOpenDetail={(concert) => navigate(`/concert/${concert.id}`)}/>
       </div>
     </div>
   );
