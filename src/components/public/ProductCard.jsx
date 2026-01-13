@@ -1,11 +1,9 @@
 import React from "react";
 import { Calendar, MapPin, Ticket } from "lucide-react";
-import {useNavigate} from "react-router-dom";
 
 const ProductCard = ({ concert, onBuy }) => {
-  const navigate = useNavigate();
-    if (!concert) return null;
-  const { id, artist, date, venue, price, category } = concert;
+  if (!concert) return null;
+  const { artist, date, venue, price, category } = concert;
 
   return (
     <div className="min-w-[260px] md:min-w-[300px] snap-start bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex-shrink-0">
@@ -22,9 +20,7 @@ const ProductCard = ({ concert, onBuy }) => {
       </div>
 
       <div className="p-4">
-        <h3 
-        onClick={() => navigate(`/concert/${id}`)}
-        className="text-lg font-bold text-gray-800 mb-3 line-clamp-1">
+        <h3 className="text-lg font-bold text-gray-800 mb-3 line-clamp-1">
           {artist}
         </h3>
 
