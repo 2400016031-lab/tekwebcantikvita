@@ -74,7 +74,7 @@ export default function AdminDashboard({ navigateTo }) {
       <AdminHeader onLogout={handleLogout} />
 
       <div className="p-10 space-y-10">
-        {/* STATS */}
+   
         <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
           <StatsCard
             icon="📅"
@@ -84,7 +84,7 @@ export default function AdminDashboard({ navigateTo }) {
           />
         </div>
 
-        {/* HEADER */}
+       
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold text-slate-800">
             Manajemen Event Konser
@@ -97,7 +97,7 @@ export default function AdminDashboard({ navigateTo }) {
           </button>
         </div>
 
-        {/* TABLE */}
+        
         <DataTable
           data={concerts}
           onEdit={(item) => {
